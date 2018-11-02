@@ -34,6 +34,7 @@ from RPi import GPIO
 
 CLASS_REGISTRY = [
     'authbox.badgereader_hid_keystroking.HIDKeystrokingReader',
+    'authbox.badgereader_wiegand_gpio.WiegandGPIOReader',
     'authbox.gpio_button.Button',
     'authbox.gpio_relay.Relay',
     'authbox.gpio_buzzer.Buzzer',

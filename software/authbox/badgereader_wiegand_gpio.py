@@ -34,7 +34,7 @@ class WiegandGPIOReader(BasePinThread):
   where 3 is the D0 pin (physical numbering), and 5 is the D1 pin (also 
   hysical numbering).
   """
-  def __init__(self, event_queue, config_name, d0_pin, d1_pin, on_scan=None):
+  def __init__(self, event_queue, config_name, d0_pin, d1_pin, bit_len=26, on_scan=None):
     super(WiegandGPIOReader, self).__init__(event_queue, config_name)
     self._on_scan = on_scan
     if self._on_scan:
@@ -79,7 +79,6 @@ class WiegandGPIOReader(BasePinThread):
                 #print "Binary:",bits
                 #result = int(str(bits[1:26]),2)
                 print('Bits is {} bits in length'.format(len(bits)))
-
                 print('{:012X}'.format(bits[-25:-1].int))
                 print('{0:30b}'.format(bits[-25:-1].int))
                 bits = bitstring.BitStream('0x0')
