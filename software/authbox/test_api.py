@@ -25,11 +25,11 @@ import authbox.gpio_button
 
 SAMPLE_CONFIG = b'''
 [pins]
-button_a = Button:1:2
+button_a = Button:11:12
 button_b = Button
-button_c = Button:1:2:3:4:5
-button_multi = Button:1:2, Button:3:4
-bad = MissingClass:1:2
+button_c = Button:11:12:13:15:16
+button_multi = Button:11:12, Button:15:16
+bad = MissingClass:11:12
 '''
 
 
@@ -55,8 +55,8 @@ class DispatcherTest(unittest.TestCase):
   def test_load_config_object(self):
     self.dispatcher.load_config_object('button_a')
     self.assertIsInstance(self.dispatcher.button_a, authbox.gpio_button.Button)
-    self.assertEqual(self.dispatcher.button_a.input_pin, 1)
-    self.assertEqual(self.dispatcher.button_a.output_pin, 2)
+    self.assertEqual(self.dispatcher.button_a.input_pin, 11)
+    self.assertEqual(self.dispatcher.button_a.output_pin, 12)
 
   def test_load_config_object_multiproxy(self):
     self.dispatcher.load_config_object('button_multi')

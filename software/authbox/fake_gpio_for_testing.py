@@ -26,7 +26,12 @@ class FakeGPIO(object):
   """Fake for the RPi.GPIO module (parts of it)."""
 
   def __init__(self, fake_time=None):
-    self.pin_states = [0] * 10
+    # Set up 40 "pins", corresponding to the pins on the Pi
+    # This was needed due to checks performed around GPIO.setmode(BOARD)
+    # If tests are run with pins outside of the pin_states range the following
+    # error occurs:
+    # IndexError: list assignment index out of range
+    self.pin_states = [0] * 40
     self.events = {}
     self.time = fake_time or time
 

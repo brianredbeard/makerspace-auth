@@ -28,7 +28,7 @@ class BuzzerTest(unittest.TestCase):
     authbox.gpio_buzzer.time = self.time
 
     self.q = queue.Queue()
-    self.b = authbox.gpio_buzzer.Buzzer(self.q, 'b', '1')
+    self.b = authbox.gpio_buzzer.Buzzer(self.q, 'b', '11')
 
   def test_on(self):
     self.time.sleep(2)
@@ -36,7 +36,7 @@ class BuzzerTest(unittest.TestCase):
     self.b.run_inner(False)
     self.assertRaises(queue.Empty, self.b.run_inner, False)
     self.fake.compare_log([
-        (0, 1, False), (2, 1, True)])
+        (0, 11, False), (2, 11, True)])
 
   def test_off(self):
     self.time.sleep(2)
@@ -44,7 +44,7 @@ class BuzzerTest(unittest.TestCase):
     self.b.run_inner(False)
     self.assertRaises(queue.Empty, self.b.run_inner, False)
     self.fake.compare_log([
-        (0, 1, False), (2, 1, False)])
+        (0, 11, False), (2, 11, False)])
 
   def test_beep(self):
     self.b.beep()
@@ -53,8 +53,8 @@ class BuzzerTest(unittest.TestCase):
     self.b.run_inner(False)
     self.assertRaises(queue.Empty, self.b.run_inner, False)
     self.fake.compare_log([
-        (0, 1, False), (0, 1, True), (0.3, 1, False),
-        (0.6, 1, True)])
+        (0, 11, False), (0, 11, True), (0.3, 11, False),
+        (0.6, 11, True)])
 
   # BEEPING mode is not very testable, due to the infinite loop and empty
   # check.  We could put this in another thread, but that's a test for another
@@ -65,5 +65,5 @@ class BuzzerTest(unittest.TestCase):
   #  self.b.run_inner(False)
   #  # Queue is not empty.
   #  self.fake.compare_log([
-  #      (0, 1, False), (0.3, 1, True), (0.6, 1, False)])
+  #      (0, 11, False), (0.3, 1, True), (0.6, 11, False)])
 

@@ -27,7 +27,7 @@ class BlinkTest(unittest.TestCase):
   def setUp(self):
     self.fake = fake_gpio_for_testing.FakeGPIO()
     self.q = queue.Queue()
-    self.b = authbox.gpio_button.Button(self.q, 'b', '1', '2', on_down=self.on_down)
+    self.b = authbox.gpio_button.Button(self.q, 'b', '11', '12', on_down=self.on_down)
 
   def on_down(self):
     pass
@@ -36,10 +36,10 @@ class BlinkTest(unittest.TestCase):
     self.b.on()
     self.b.run_inner()
     # 2 is output
-    self.fake.compare_log([(0, 2, True)])
+    self.fake.compare_log([(0, 12, True)])
     # 1 is input
-    self.assertEqual(GPIO.FALLING, self.fake.events[1][0])
-    self.fake.events[1][1](None)
+    self.assertEqual(GPIO.FALLING, self.fake.events[11][0])
+    self.fake.events[11][1](None)
     self.assertEqual(self.q.get(block=False), (self.on_down, self.b))
 
   def test_blinking_thread(self):
@@ -50,4 +50,4 @@ class BlinkTest(unittest.TestCase):
     for i in range(4):
       self.b.run_inner()
     self.fake.compare_log([
-        (0.0, 2, True), (0.5, 2, False), (1.0, 2, True), (1.5, 2, False)])
+        (0.0, 12, True), (0.5, 12, False), (1.0, 12, True), (1.5, 12, False)])

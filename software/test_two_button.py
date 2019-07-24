@@ -31,11 +31,11 @@ from RPi import GPIO
 
 SAMPLE_CONFIG = b'''
 [pins]
-on_button=Button:1:2
-off_button=Button:3:4
-enable_output=Relay:ActiveHigh:5
+on_button=Button:11:12
+off_button=Button:15:16
+enable_output=Relay:ActiveHigh:13
 badge_reader=HIDKeystrokingReader:badge_scanner
-buzzer=Buzzer:9
+buzzer=Buzzer:7
 [auth]
 duration=20s
 warning=10s
@@ -65,17 +65,17 @@ class SimpleDispatcherTest(unittest.TestCase):
   def test_auth_flow(self):
     # Out of the box, relay should be off
     self.assertFalse(self.dispatcher.authorized)
-    self.assertFalse(GPIO.input(5))
+    self.assertFalse(GPIO.input(13))
     # Badge scan sets authorized flag, but doesn't enable relay until button
     # press.
     self.dispatcher.badge_scan('1234')
     self.assertTrue(self.dispatcher.authorized)
-    self.assertFalse(GPIO.input(5))
+    self.assertFalse(GPIO.input(13))
     # "On" button pressed
     self.dispatcher.on_button_down(None)
     self.assertTrue(self.dispatcher.authorized)
-    self.assertTrue(GPIO.input(5))
+    self.assertTrue(GPIO.input(13))
     # "Off" button pressed
     self.dispatcher.abort(None)
     self.assertFalse(self.dispatcher.authorized)
-    self.assertFalse(GPIO.input(5))
+    self.assertFalse(GPIO.input(13))
